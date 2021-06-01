@@ -1,4 +1,4 @@
-FROM golang:1.16.0-buster AS go
+FROM golang:1.16.0-buster@sha256:bc0a18960c7a40372668def568eb17685c6c7561aea962258f1f74c020aff45d AS go
 
 ENV GO111MODULE=on
 RUN go get github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
@@ -8,7 +8,7 @@ RUN git clone https://github.com/zaquestion/lab.git \
 	&& git checkout v0.17.2 \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
-FROM ubuntu:20.04
+FROM ubuntu:20.04@sha256:adf73ca014822ad8237623d388cedf4d5346aa72c270c5acc01431cc93e18e2d
 
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
