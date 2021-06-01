@@ -25,7 +25,7 @@ RUN curl -L --fail https://github.com/vmware-tanzu/velero/releases/download/${VE
     chmod +x /usr/bin/velero
 
 # kubectl
-ENV KUBECTL_VERSION=v1.21.0
+ENV KUBECTL_VERSION=v1.21.1
 RUN curl -L --silent --fail -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 RUN chmod +x /usr/local/bin/kubectl
 
