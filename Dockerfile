@@ -20,7 +20,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install make curl bats dnsutils git -
 # velero
 ENV VELERO_VERSION=v1.3.2
 RUN curl -L --fail https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz \
-        | tar -xzO velero-v1.3.2-linux-amd64/velero \
+        | tar -xzO velero-${VELERO_VERSION}-linux-amd64/velero \
         > /usr/bin/velero && \
     chmod +x /usr/bin/velero
 
