@@ -18,7 +18,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install make curl bats dnsutils git -y
 
 # velero
-ENV VELERO_VERSION=v1.3.2
+ENV VELERO_VERSION=v1.6.0
 RUN curl -L --fail https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz \
         | tar -xzO velero-${VELERO_VERSION}-linux-amd64/velero \
         > /usr/bin/velero && \
