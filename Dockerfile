@@ -13,9 +13,9 @@ FROM ubuntu:20.04@sha256:adf73ca014822ad8237623d388cedf4d5346aa72c270c5acc01431c
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
 
-# make curl bats dig git
+# make curl bats dig git envsubst
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install make curl bats dnsutils git -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install make curl bats dnsutils git gettext -y
 
 # velero
 ENV VELERO_VERSION=v1.6.0
