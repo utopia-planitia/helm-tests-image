@@ -1,4 +1,4 @@
-FROM golang:1.16.4-buster@sha256:fc58cc5aaeb7fe258a7d31450e8d0480dd2cb07e4c6fd9bf2a09b464ce0e379c AS go
+FROM golang:1.16.5-buster@sha256:9d8f70f7f67e461ae75c148ee66394f4242f4b359c27222c31aeea1851c39d8f AS go
 
 ENV GO111MODULE=on
 RUN go get github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
