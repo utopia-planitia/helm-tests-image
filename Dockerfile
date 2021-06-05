@@ -3,19 +3,21 @@ FROM golang:1.16.5-buster@sha256:9d8f70f7f67e461ae75c148ee66394f4242f4b359c27222
 ENV GO111MODULE=on
 RUN go get github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
 
+# lab
 RUN git clone https://github.com/zaquestion/lab.git \
 	&& cd lab \
 	&& git checkout v0.17.2 \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
-FROM ubuntu:20.04@sha256:adf73ca014822ad8237623d388cedf4d5346aa72c270c5acc01431cc93e18e2d
+# final image
+FROM ubuntu:21.04
 
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
 
-# make curl bats dig git envsubst
+# make curl bats dig git envsubst skopeo
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install make curl bats dnsutils git gettext -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install make curl bats dnsutils git gettext skopeo -y
 
 # velero
 ENV VELERO_VERSION=v1.6.0
