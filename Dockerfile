@@ -33,7 +33,7 @@ RUN curl -L --silent --fail -o /usr/local/bin/kubectl https://storage.googleapis
 RUN chmod +x /usr/local/bin/kubectl
 
 # docker
-ENV DOCKER_VERSION=19.03.15
+ENV DOCKER_VERSION=20.10.7
 RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
   && tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 \
        -C /usr/local/bin docker/docker \
