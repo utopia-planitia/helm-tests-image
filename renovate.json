@@ -39,7 +39,8 @@
     "packageRules": [
       {
         "matchPackageNames": ["docker/cli"],
-        "extractVersion": "^v(?<version>.*)$"
+        "extractVersion": "^v(?<version>.*)$",
+        "versioning": "docker"
       }
     ],
     "prHourlyLimit": 0,
