@@ -2,7 +2,16 @@
 
 This container image contains
 
-- helm
-- helmfile
-- kustomize
+- lab
+- flarectl
+- make
+- bats
+- envsubst
+- dig
+- git
 - curl
+- docker client
+- skopeo
+- let's encrypt stage CA
+- velero client
+- kubectl
