@@ -1,4 +1,4 @@
-FROM golang:1.16.5-buster@sha256:9d8f70f7f67e461ae75c148ee66394f4242f4b359c27222c31aeea1851c39d8f AS go
+FROM golang:1.16.4-buster@sha256:fc58cc5aaeb7fe258a7d31450e8d0480dd2cb07e4c6fd9bf2a09b464ce0e379c AS go
 
 ENV GO111MODULE=on
 RUN go get github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
@@ -18,7 +18,7 @@ COPY --from=go /go/bin/lab      /usr/local/bin/lab
 
 # make curl bats dig git envsubst skopeo
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install make curl bats dnsutils git gettext skopeo -y
+RUN DEBIAN_FRONTEND=noninteractive apt install -y make curl bats dnsutils git gettext skopeo
 
 # velero
 ENV VELERO_VERSION=v1.6.0
@@ -32,9 +32,15 @@ ENV KUBECTL_VERSION=v1.21.1
 RUN curl -L --silent --fail -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 RUN chmod +x /usr/local/bin/kubectl
 
+# docker
+ENV DOCKER_VERSION=19.03.15
+RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
+  && tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 \
+       -C /usr/local/bin docker/docker \
+  && rm docker-${DOCKER_VERSION}.tgz
+
 # add lets encrypt stage cert
 RUN curl --fail --silent -L -o /usr/local/share/ca-certificates/fakelerootx1.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-int-r3.pem
 RUN update-ca-certificates
-
 
 WORKDIR /tests

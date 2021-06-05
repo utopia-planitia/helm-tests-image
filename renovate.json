@@ -24,6 +24,22 @@
         ],
         "depNameTemplate": "kubernetes/kubernetes",
         "datasourceTemplate": "github-tags"
+      },
+      {
+        "fileMatch": [
+          "^Dockerfile$"
+        ],
+        "matchStrings": [
+          "ENV DOCKER_VERSION=(?<currentValue>.*?)\n"
+        ],
+        "depNameTemplate": "docker/cli",
+        "datasourceTemplate": "github-tags"
+      }
+    ],
+    "packageRules": [
+      {
+        "matchPackageNames": ["docker/cli"],
+        "extractVersion": "^v(?<version>.*)$"
       }
     ],
     "prHourlyLimit": 0,
