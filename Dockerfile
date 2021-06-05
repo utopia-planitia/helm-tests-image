@@ -10,7 +10,7 @@ RUN git clone https://github.com/zaquestion/lab.git \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
 # final image
-FROM ubuntu:21.04
+FROM ubuntu:21.04@sha256:9a5cc8359b220b9414e4dc6ec992f867b33f864c560a1e198fb833f98b8f7f3c
 
 # copy multistage artifacts
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
