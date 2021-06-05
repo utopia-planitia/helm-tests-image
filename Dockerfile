@@ -10,15 +10,15 @@ RUN git clone https://github.com/zaquestion/lab.git \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
 # final image
-FROM ubuntu:21.04
+FROM ubuntu:20.04
 
 # copy multistage artifacts
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
 
-# make curl bats dig git envsubst skopeo
+# make curl bats dig git envsubst
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt install -y make curl bats dnsutils git gettext skopeo
+RUN DEBIAN_FRONTEND=noninteractive apt install -y make curl bats dnsutils git gettext gnupg
 
 # velero
 ENV VELERO_VERSION=v1.6.0
@@ -38,6 +38,13 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${
   && tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 \
        -C /usr/local/bin docker/docker \
   && rm docker-${DOCKER_VERSION}.tgz
+
+# skopeo
+RUN bash -c '. /etc/os-release && \
+             echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /" | tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && \
+             curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | apt-key add - && \
+             apt-get update && \
+             apt-get -y install skopeo'
 
 # add lets encrypt stage cert
 RUN curl --fail --silent -L -o /usr/local/share/ca-certificates/fakelerootx1.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-int-r3.pem
