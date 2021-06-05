@@ -12,6 +12,7 @@ RUN git clone https://github.com/zaquestion/lab.git \
 # final image
 FROM ubuntu:21.04
 
+# copy multistage artifacts
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
 
@@ -30,5 +31,10 @@ RUN curl -L --fail https://github.com/vmware-tanzu/velero/releases/download/${VE
 ENV KUBECTL_VERSION=v1.21.1
 RUN curl -L --silent --fail -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 RUN chmod +x /usr/local/bin/kubectl
+
+# add lets encrypt stage cert
+RUN curl --fail --silent -L -o /usr/local/share/ca-certificates/fakelerootx1.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-int-r3.pem
+RUN update-ca-certificates
+
 
 WORKDIR /tests
