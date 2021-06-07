@@ -38,6 +38,16 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${
        -C /usr/local/bin docker/docker \
   && rm docker-${DOCKER_VERSION}.tgz
 
+# PHP
+RUN apk add php-cli  php-json php-phar php-iconv php-openssl
+
+# composer
+RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
+  php composer-setup.php --version=1.10.22 && \
+  rm composer-setup.php && \
+  mv composer.phar /usr/local/bin/composer
+
+
 # add lets encrypt stage cert
 RUN curl --fail --silent -L -o /usr/local/share/ca-certificates/fakelerootx1.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-int-r3.pem
 RUN update-ca-certificates
@@ -58,3 +68,5 @@ RUN git --version
 RUN envsubst --version
 RUN go version
 RUN skopeo --version
+RUN php --version
+RUN composer --version

@@ -16,3 +16,5 @@ This container image contains
 - velero client
 - kubectl
 - go
+- php
+- composer
