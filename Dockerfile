@@ -3,7 +3,10 @@ FROM golang:1.16.4-alpine@sha256:0dc62c5cc2d97657c17ff3bc0224214e10226e245c94317
 RUN apk add --update --no-cache git
 
 ENV GO111MODULE=on
+
 RUN go get github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
+
+RUN go get github.com/minio/mc@RELEASE.2021-05-26T19-19-26Z
 
 # lab
 RUN git clone https://github.com/zaquestion/lab.git \
@@ -16,6 +19,7 @@ FROM golang:1.16.4-alpine@sha256:0dc62c5cc2d97657c17ff3bc0224214e10226e245c94317
 # copy multistage artifacts
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
+COPY --from=go /go/bin/mc       /usr/local/bin/mc
 
 RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo
 
@@ -59,6 +63,7 @@ RUN which lab
 RUN docker --version
 RUN kubectl version --client
 RUN velero version --client-only
+RUN mc --version
 
 RUN make --version
 RUN curl --version

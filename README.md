@@ -18,3 +18,4 @@ This container image contains
 - go
 - php
 - composer
+- minio client
