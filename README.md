@@ -15,3 +15,4 @@ This container image contains
 - let's encrypt stage CA
 - velero client
 - kubectl
+- go
