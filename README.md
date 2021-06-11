@@ -19,3 +19,5 @@ This container image contains
 - php
 - composer
 - minio client
+- npm
+- yarn

@@ -51,6 +51,8 @@ RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
   rm composer-setup.php && \
   mv composer.phar /usr/local/bin/composer
 
+# npm yarn
+RUN apk add npm yarn
 
 # add lets encrypt stage cert
 RUN curl --fail --silent -L -o /usr/local/share/ca-certificates/fakelerootx1.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-int-r3.pem
@@ -75,3 +77,5 @@ RUN go version
 RUN skopeo --version
 RUN php --version
 RUN composer --version
+RUN npm --version
+RUN yarn --version
