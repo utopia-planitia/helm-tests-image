@@ -21,7 +21,7 @@ COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
 COPY --from=go /go/bin/mc       /usr/local/bin/mc
 
-RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo
+RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo jq
 
 # velero
 ENV VELERO_VERSION=v1.6.0
@@ -79,3 +79,4 @@ RUN php --version
 RUN composer --version
 RUN npm --version
 RUN yarn --version
+RUN jq --version

@@ -21,3 +21,4 @@ This container image contains
 - minio client
 - npm
 - yarn
+- jq
