@@ -24,7 +24,7 @@ COPY --from=go /go/bin/mc       /usr/local/bin/mc
 RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo jq
 
 # velero
-ENV VELERO_VERSION=v1.6.1
+ENV VELERO_VERSION=v1.6.2
 RUN curl -L --fail https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz \
         | tar -xzO velero-${VELERO_VERSION}-linux-amd64/velero \
         > /usr/local/bin/velero && \
