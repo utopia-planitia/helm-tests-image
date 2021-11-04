@@ -4,6 +4,12 @@
       "config:base"
     ],
     "pinDigests": true,
+    "prHourlyLimit": 0,
+    "labels": [
+        "renovate-bot"
+    ],
+    "automerge": true,
+    "automergeType": "pr",
     "regexManagers": [
       {
         "fileMatch": [
@@ -42,12 +48,5 @@
         "extractVersion": "^v(?<version>.*)$",
         "versioning": "docker"
       }
-    ],
-    "prHourlyLimit": 0,
-    "labels": [
-      "renovate-bot"
-    ],
-    "automerge": true,
-    "automergeType": "pr",
-    "prConcurrentLimit": 3
+    ]
   }
