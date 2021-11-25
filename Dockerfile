@@ -47,7 +47,7 @@ RUN apk add php-cli  php-json php-phar php-iconv php-openssl php-curl
 
 # composer
 RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
-  php composer-setup.php --version=1.10.22 && \
+  php composer-setup.php --version=2.1.12 && \
   rm composer-setup.php && \
   mv composer.phar /usr/local/bin/composer
 
