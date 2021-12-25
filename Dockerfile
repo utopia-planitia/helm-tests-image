@@ -1,4 +1,5 @@
 FROM golang:1.17.8-alpine@sha256:95abb5d5c780126d12a63401acddc9fe0748fab7c5bd498f9961ed5736393049 AS go
+SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 
 RUN apk add --update --no-cache git
 
@@ -13,6 +14,7 @@ RUN git clone https://github.com/zaquestion/lab.git \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
 FROM golang:1.17.8-alpine@sha256:95abb5d5c780126d12a63401acddc9fe0748fab7c5bd498f9961ed5736393049
+SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 
 # copy multistage artifacts
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
@@ -67,7 +69,7 @@ RUN flarectl --version
 RUN which lab
 RUN docker --version
 RUN kubectl version --client
-RUN virtctl version | grep "Client Version"
+RUN virtctl version --client
 RUN velero version --client-only
 RUN mc --version
 
