@@ -26,6 +26,17 @@
           "^Dockerfile$"
         ],
         "matchStrings": [
+          "\\bENV LAB_VERSION=(?<currentValue>.*)\\b"
+        ],
+        "depNameTemplate": "zaquestion/lab",
+        "datasourceTemplate": "github-tags",
+        "extractVersionTemplate": "^v(?<version>.*)$"
+      },
+      {
+        "fileMatch": [
+          "^Dockerfile$"
+        ],
+        "matchStrings": [
           "ENV KUBECTL_VERSION=(?<currentValue>.*?)\n"
         ],
         "depNameTemplate": "kubernetes/kubernetes",
