@@ -1,27 +1,27 @@
 FROM golang:1.17.5-alpine@sha256:4918412049183afe42f1ecaf8f5c2a88917c2eab153ce5ecf4bf2d55c1507b74 AS go
 
-RUN apk add --update --no-cache git
-
 ENV GO111MODULE=on
 
 RUN go get github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
 
 RUN go get github.com/minio/mc@RELEASE.2021-05-26T19-19-26Z
 
-# lab
-RUN git clone https://github.com/zaquestion/lab.git \
-	&& cd lab \
-	&& git checkout v0.17.2 \
-	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
-
 FROM golang:1.17.5-alpine@sha256:4918412049183afe42f1ecaf8f5c2a88917c2eab153ce5ecf4bf2d55c1507b74
 
 # copy multistage artifacts
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
-COPY --from=go /go/bin/lab      /usr/local/bin/lab
 COPY --from=go /go/bin/mc       /usr/local/bin/mc
 
 RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo jq
+
+# lab
+ENV LAB_VERSION=0.23.0
+RUN apk add --no-cache --update git libc6-compat; \
+    curl --fail --location --show-error --silent \
+      "https://github.com/zaquestion/lab/releases/download/v${LAB_VERSION:?}/lab_${LAB_VERSION}_linux_amd64.tar.gz" | \
+      tar xzf - --directory=/usr/local/bin/ --no-same-owner --no-same-permissions lab; \
+    command -v lab; \
+    lab --version | grep -F "${LAB_VERSION:?}"
 
 # velero
 ENV VELERO_VERSION=v1.7.1
@@ -61,7 +61,7 @@ RUN update-ca-certificates
 WORKDIR /tests
 
 RUN flarectl --version
-RUN which lab
+RUN lab --version
 RUN docker --version
 RUN kubectl version --client
 RUN velero version --client-only
