@@ -1,4 +1,4 @@
-FROM golang:1.17.8-alpine@sha256:c97df33c83fbc89aad125f9b9c5d868db24b7952711cb1ff92b6add619d8486e AS go
+FROM golang:1.17.8-alpine@sha256:c024b1fdb190e6537851cc2f9a83341980658d392941c0c8b7bda52ef3cdf079 AS go
 
 RUN apk add --update --no-cache git
 
@@ -14,7 +14,7 @@ RUN git clone https://github.com/zaquestion/lab.git \
 	&& git checkout v0.17.2 \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
-FROM golang:1.17.8-alpine@sha256:c97df33c83fbc89aad125f9b9c5d868db24b7952711cb1ff92b6add619d8486e
+FROM golang:1.17.8-alpine@sha256:c024b1fdb190e6537851cc2f9a83341980658d392941c0c8b7bda52ef3cdf079
 
 # copy multistage artifacts
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
