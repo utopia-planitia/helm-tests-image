@@ -36,6 +36,16 @@
           "^Dockerfile$"
         ],
         "matchStrings": [
+          "ENV VIRTCTL_VERSION=(?<currentValue>.*?)\n"
+        ],
+        "depNameTemplate": "kubevirt/kubevirt",
+        "datasourceTemplate": "github-tags"
+      },
+      {
+        "fileMatch": [
+          "^Dockerfile$"
+        ],
+        "matchStrings": [
           "ENV DOCKER_VERSION=(?<currentValue>.*?)\n"
         ],
         "depNameTemplate": "docker/cli",

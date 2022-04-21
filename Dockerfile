@@ -35,6 +35,11 @@ ENV KUBECTL_VERSION=v1.23.6
 RUN curl -L --silent --fail -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
 RUN chmod +x /usr/local/bin/kubectl
 
+# virtctl
+ENV VIRTCTL_VERSION=v0.52.0
+RUN curl -L --silent --fail -o /usr/local/bin/virtctl https://github.com/kubevirt/kubevirt/releases/download/${VIRTCTL_VERSION}/virtctl-${VIRTCTL_VERSION}-linux-amd64
+RUN chmod +x /usr/local/bin/virtctl
+
 # docker
 ENV DOCKER_VERSION=20.10.14
 RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
@@ -64,6 +69,7 @@ RUN flarectl --version
 RUN which lab
 RUN docker --version
 RUN kubectl version --client
+RUN virtctl version | grep "Client Version"
 RUN velero version --client-only
 RUN mc --version
 
