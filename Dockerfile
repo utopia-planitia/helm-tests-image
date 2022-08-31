@@ -2,11 +2,9 @@ FROM golang:1.17.8-alpine@sha256:95abb5d5c780126d12a63401acddc9fe0748fab7c5bd498
 
 RUN apk add --update --no-cache git
 
-ENV GO111MODULE=on
+RUN go install github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
 
-RUN go get github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
-
-RUN go get github.com/minio/mc@RELEASE.2021-05-26T19-19-26Z
+RUN go install github.com/minio/mc@RELEASE.2021-05-26T19-19-26Z
 
 # lab
 RUN git clone https://github.com/zaquestion/lab.git \
