@@ -48,7 +48,7 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${
   && rm docker-${DOCKER_VERSION}.tgz
 
 # PHP
-RUN apk add php-cli php-json php-phar php7-mbstring php-iconv php-openssl php-curl
+RUN apk add --no-cache php7 php7-curl php7-iconv php7-json php7-mbstring php7-openssl php7-phar
 
 # composer
 RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
