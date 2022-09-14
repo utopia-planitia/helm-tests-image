@@ -36,7 +36,7 @@ RUN curl -L --silent --fail -o /usr/local/bin/kubectl https://storage.googleapis
 RUN chmod +x /usr/local/bin/kubectl
 
 # virtctl
-ENV VIRTCTL_VERSION=v0.57.0
+ENV VIRTCTL_VERSION=v0.57.1
 RUN curl -L --silent --fail -o /usr/local/bin/virtctl https://github.com/kubevirt/kubevirt/releases/download/${VIRTCTL_VERSION}/virtctl-${VIRTCTL_VERSION}-linux-amd64
 RUN chmod +x /usr/local/bin/virtctl
 
