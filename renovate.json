@@ -50,6 +50,16 @@
         ],
         "depNameTemplate": "docker/cli",
         "datasourceTemplate": "github-tags"
+      },
+      {
+        "fileMatch": [
+          "^Dockerfile$"
+        ],
+        "matchStrings": [
+          "php composer-setup\\.php --version=(?<currentValue>[^\\s]+)"
+        ],
+        "depNameTemplate": "composer/composer",
+        "datasourceTemplate": "github-releases"
       }
     ],
     "packageRules": [
