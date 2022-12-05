@@ -1,4 +1,4 @@
-FROM golang:1.19.3-alpine@sha256:8bd8a4b55b233ea77a81250f83637553ef9e3348c5a0cc3ce440c5d45bf7d51d AS go
+FROM golang:1.19.3-alpine@sha256:d171aa333fb386089206252503bc6ab545072670e0286e3d1bbc644362825c6e AS go
 SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 
 RUN apk add --update --no-cache git
@@ -13,7 +13,7 @@ RUN git clone https://github.com/zaquestion/lab.git \
 	&& git checkout v0.17.2 \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
-FROM golang:1.19.3-alpine@sha256:8bd8a4b55b233ea77a81250f83637553ef9e3348c5a0cc3ce440c5d45bf7d51d
+FROM golang:1.19.3-alpine@sha256:d171aa333fb386089206252503bc6ab545072670e0286e3d1bbc644362825c6e
 SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 
 # copy multistage artifacts
@@ -48,7 +48,18 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${
   && rm docker-${DOCKER_VERSION}.tgz
 
 # PHP
-RUN apk add --no-cache php8 php8-curl php8-iconv php8-json php8-mbstring php8-openssl php8-phar
+# the package name changes depending on the PHP version that is available in the base image's package repository (php7, php8, php81, ...)
+RUN PHP_PACKAGE="$(apk search --exact --no-cache --quiet cmd:php)"; \
+  apk add --no-cache \
+    "${PHP_PACKAGE:?}" \
+    "${PHP_PACKAGE:?}-curl" \
+    "${PHP_PACKAGE:?}-iconv" \
+    "${PHP_PACKAGE:?}-json" \
+    "${PHP_PACKAGE:?}-mbstring" \
+    "${PHP_PACKAGE:?}-openssl" \
+    "${PHP_PACKAGE:?}-phar" \
+    ; \
+  php --version
 
 # composer
 RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
