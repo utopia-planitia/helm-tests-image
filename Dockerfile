@@ -48,7 +48,18 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${
   && rm docker-${DOCKER_VERSION}.tgz
 
 # PHP
-RUN apk add --no-cache php8 php8-curl php8-iconv php8-json php8-mbstring php8-openssl php8-phar
+# the package name changes depending on the PHP version that is available in the base image's package repository (php7, php8, php81, ...)
+RUN PHP_PACKAGE="$(apk search --exact --no-cache --quiet cmd:php)"; \
+  apk add --no-cache \
+    "${PHP_PACKAGE:?}" \
+    "${PHP_PACKAGE:?}-curl" \
+    "${PHP_PACKAGE:?}-iconv" \
+    "${PHP_PACKAGE:?}-json" \
+    "${PHP_PACKAGE:?}-mbstring" \
+    "${PHP_PACKAGE:?}-openssl" \
+    "${PHP_PACKAGE:?}-phar" \
+    ; \
+  php --version
 
 # composer
 RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
