@@ -63,7 +63,7 @@ RUN PHP_PACKAGE="$(apk search --exact --no-cache --quiet cmd:php)"; \
 
 # composer
 RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
-  php composer-setup.php --version=2.4.4 && \
+  php composer-setup.php --version=2.5.0 && \
   rm composer-setup.php && \
   mv composer.phar /usr/local/bin/composer
 
