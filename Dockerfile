@@ -3,9 +3,11 @@ SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 
 RUN apk add --update --no-cache git
 
-RUN go install github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.13.7
+RUN go install github.com/cloudflare/cloudflare-go/cmd/flarectl@v0.60.0
 
-RUN go install github.com/minio/mc@RELEASE.2021-05-26T19-19-26Z
+RUN go install github.com/minio/mc@RELEASE.2023-01-28T20-29-38Z
+
+RUN go install github.com/mikefarah/yq/v4@v4.30.8
 
 # lab
 RUN git clone https://github.com/zaquestion/lab.git \
@@ -20,6 +22,7 @@ SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 COPY --from=go /go/bin/flarectl /usr/local/bin/flarectl
 COPY --from=go /go/bin/lab      /usr/local/bin/lab
 COPY --from=go /go/bin/mc       /usr/local/bin/mc
+COPY --from=go /go/bin/yq       /usr/local/bin/yq
 
 RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo jq
 
@@ -97,3 +100,4 @@ RUN composer --version
 RUN npm --version
 RUN yarn --version
 RUN jq --version
+RUN yq --version
