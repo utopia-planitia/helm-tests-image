@@ -24,7 +24,7 @@ COPY --from=go /go/bin/lab      /usr/local/bin/lab
 COPY --from=go /go/bin/mc       /usr/local/bin/mc
 COPY --from=go /go/bin/yq       /usr/local/bin/yq
 
-RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo jq
+RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo jq xmlstarlet
 
 # velero
 ENV VELERO_VERSION=v1.10.1
@@ -101,3 +101,4 @@ RUN npm --version
 RUN yarn --version
 RUN jq --version
 RUN yq --version
+RUN xmlstarlet --version

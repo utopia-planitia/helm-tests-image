@@ -22,3 +22,5 @@ This container image contains
 - npm
 - yarn
 - jq
+- yq
+- xmlstarlet
