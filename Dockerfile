@@ -1,4 +1,4 @@
-FROM golang:1.20.2-alpine@sha256:87734b78d26a52260f303cf1b40df45b0797f972bd0250e56937c42114bf472c AS go
+FROM golang:1.20.3-alpine@sha256:08e9c086194875334d606765bd60aa064abd3c215abfbcf5737619110d48d114 AS go
 SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 
 RUN apk add --update --no-cache git
@@ -15,7 +15,7 @@ RUN git clone https://github.com/zaquestion/lab.git \
 	&& git checkout v0.17.2 \
 	&& go install -ldflags "-X \"main.version=$(git  rev-parse --short=10 HEAD)\"" .
 
-FROM golang:1.20.2-alpine@sha256:87734b78d26a52260f303cf1b40df45b0797f972bd0250e56937c42114bf472c
+FROM golang:1.20.3-alpine@sha256:08e9c086194875334d606765bd60aa064abd3c215abfbcf5737619110d48d114
 SHELL [ "/bin/ash", "-euxo", "pipefail", "-c" ]
 
 # copy multistage artifacts
