@@ -27,7 +27,7 @@ COPY --from=go /go/bin/yq       /usr/local/bin/yq
 RUN apk add --update --no-cache make curl bats bind-tools git gettext gnupg skopeo jq xmlstarlet
 
 # velero
-ENV VELERO_VERSION=v1.12.2
+ENV VELERO_VERSION=v1.12.3
 RUN curl -L --fail https://github.com/vmware-tanzu/velero/releases/download/${VELERO_VERSION}/velero-${VELERO_VERSION}-linux-amd64.tar.gz \
         | tar -xzO velero-${VELERO_VERSION}-linux-amd64/velero \
         > /usr/local/bin/velero && \
