@@ -44,7 +44,7 @@ RUN curl -L --silent --fail -o /usr/local/bin/virtctl https://github.com/kubevir
 RUN chmod +x /usr/local/bin/virtctl
 
 # docker
-ENV DOCKER_VERSION=26.0.2
+ENV DOCKER_VERSION=26.1.0
 RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz \
   && tar xzvf docker-${DOCKER_VERSION}.tgz --strip 1 \
        -C /usr/local/bin docker/docker \
