@@ -73,9 +73,11 @@ RUN curl -fsL -o composer-setup.php https://getcomposer.org/installer && \
 # npm yarn
 RUN apk add npm yarn
 
-# add lets encrypt stage cert
-RUN curl --fail --silent -L -o /usr/local/share/ca-certificates/fakelerootx1.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-int-r3.pem
-RUN update-ca-certificates
+# add lets encrypt stage certs
+RUN set -eux; \
+  curl --fail --show-error --silent --location --output /usr/local/share/ca-certificates/letsencrypt-stg-root-x1.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-root-x1.pem; \
+  curl --fail --show-error --silent --location --output /usr/local/share/ca-certificates/letsencrypt-stg-int-r3.crt https://letsencrypt.org/certs/staging/letsencrypt-stg-int-r3.pem; \
+  update-ca-certificates
 
 WORKDIR /tests
 
